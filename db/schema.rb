@@ -10,7 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_06_050102) do
+ActiveRecord::Schema.define(version: 2021_04_12_222008) do
+
+  create_table "projects", charset: "utf8mb4", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.string "title"
+    t.integer "target_amount"
+    t.date "due_date"
+    t.text "description"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["user_id"], name: "index_projects_on_user_id"
+  end
 
   create_table "users", charset: "utf8mb4", force: :cascade do |t|
     t.string "uid"
@@ -19,4 +30,5 @@ ActiveRecord::Schema.define(version: 2021_04_06_050102) do
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
+  add_foreign_key "projects", "users"
 end
