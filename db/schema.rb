@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2021_04_12_222008) do
+ActiveRecord::Schema.define(version: 2021_04_28_061406) do
 
   create_table "projects", charset: "utf8mb4", force: :cascade do |t|
     t.bigint "user_id", null: false
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(version: 2021_04_12_222008) do
     t.string "uid"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.string "name"
     t.index ["uid"], name: "index_users_on_uid", unique: true
   end
 
