@@ -2,8 +2,10 @@ class Api::V1::ProjectsController < ApplicationController
   before_action :set_auth, only: [:create]
 
   def index
-    projects = Project.order(created_at: :desc)
-    render json: { projects: projects }
+    projects = Project.order(created_at: :desc).includes(:user)
+    render json: { 
+      projects: projects.map { |project| ProjectSerializer.new(project: project).as_json }
+    }
   end
 
   def create
