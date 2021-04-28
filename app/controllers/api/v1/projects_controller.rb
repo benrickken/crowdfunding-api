@@ -8,6 +8,13 @@ class Api::V1::ProjectsController < ApplicationController
     }
   end
 
+  def show
+    project = Project.find(params[:id])
+    render json: {
+      project: ProjectSerializer.new(project: project).as_json
+    }
+  end
+
   def create
     render json: @auth, status: :unauthorized and return unless @auth[:data]
 
