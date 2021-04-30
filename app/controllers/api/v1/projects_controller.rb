@@ -19,7 +19,6 @@ class Api::V1::ProjectsController < ApplicationController
     render json: @auth, status: :unauthorized and return unless @auth[:data]
 
     uid = @auth[:data]['uid']
-    puts uid
     user = User.find_by(uid: uid)
     render json: { message: 'User does not exist' }, status: :bad_request and return if user.blank?    
 
