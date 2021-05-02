@@ -13,7 +13,6 @@ class ProjectSerializer
       user: {
         name: @project.user.name,
       },
-      projectReturns: @project.project_returns.map { |project_return| ProjectReturnSerializer.new(project_return: project_return).as_json },
     }
   end
 end
