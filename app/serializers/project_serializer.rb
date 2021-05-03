@@ -10,10 +10,10 @@ class ProjectSerializer
       targetAmount: @project.target_amount,
       dueDate: @project.due_date,
       description: @project.description,
+      supportersCount: @project.project_supports.count,
       user: {
         name: @project.user.name,
       },
-      projectReturns: @project.project_returns.map { |project_return| ProjectReturnSerializer.new(project_return: project_return).as_json },
     }
   end
 end

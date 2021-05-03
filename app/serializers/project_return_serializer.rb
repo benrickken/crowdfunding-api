@@ -10,6 +10,7 @@ class ProjectReturnSerializer
       capacity: @project_return.capacity,
       deliveryDate: @project_return.delivery_date,
       description: @project_return.description,
+      supportersCount: @project_return.project_supports.count,
     }
   end
 end

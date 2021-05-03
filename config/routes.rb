@@ -6,7 +6,11 @@ Rails.application.routes.draw do
           get :me
         end
       end
-      resources :projects, only: [:index, :show, :create]
+      resources :projects, only: [:index, :show, :create] do
+        member do
+          resources :project_returns, only: [:index]
+        end
+      end
       resources :project_supports, only: [:create]
     end
   end
