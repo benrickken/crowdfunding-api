@@ -10,6 +10,7 @@ class ProjectSerializer
       targetAmount: @project.target_amount,
       dueDate: @project.due_date,
       description: @project.description,
+      supportersCount: @project.project_supports.count,
       user: {
         name: @project.user.name,
       },
