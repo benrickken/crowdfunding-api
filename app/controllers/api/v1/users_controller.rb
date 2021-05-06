@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_auth, only: [:create, :me]
+  before_action :set_auth, only: %i[create me]
 
   def create
     render json: @auth, status: :unauthorized and return unless @auth[:data]
@@ -25,7 +25,7 @@ class Api::V1::UsersController < ApplicationController
   end
 
   private
-  
+
   def set_auth
     @auth = authenticate_token_by_firebase
   end

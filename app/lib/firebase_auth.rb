@@ -2,9 +2,9 @@ require 'net/http'
 
 module FirebaseAuth
   CONFIG = YAML.load_file('config/firebase.yml')
-  ALGORITHM = 'RS256'
-  ISSUER_BASE_URL = 'https://securetoken.google.com/'
-  CLIENT_CERT_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'
+  ALGORITHM = 'RS256'.freeze
+  ISSUER_BASE_URL = 'https://securetoken.google.com/'.freeze
+  CLIENT_CERT_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'.freeze
 
   class << self
     def verify_id_token(token)
@@ -17,9 +17,9 @@ module FirebaseAuth
 
       public_key = _fetch_public_keys[full_decoded_token[:header]['kid']]
       unless public_key
-        raise 'Firebase ID token has "kid" claim which does not correspond to ' +
-          'a known public key. Most likely the ID token is expired, so get a fresh token from your client ' +
-          'app and try again.'
+        raise 'Firebase ID token has "kid" claim which does not correspond to ' \
+              'a known public key. Most likely the ID token is expired, so get a fresh token from your client ' \
+              'app and try again.'
       end
 
       certificate = OpenSSL::X509::Certificate.new(public_key)
@@ -32,12 +32,13 @@ module FirebaseAuth
     end
 
     private
-    def _decode_token(token, key=nil, verify=false, options={})
+
+    def _decode_token(token, key = nil, verify = false, options = {})
       begin
         decoded_token = JWT.decode(token, key, verify, options)
       rescue JWT::ExpiredSignature => e
-        raise 'Firebase ID token has expired. Get a fresh token from your client app and try again.'
-      rescue => e
+        raise "Firebase ID token has expired. Get a fresh token from your client app and try again. #{e.message}"
+      rescue StandardError => e
         raise "Firebase ID token has invalid signature. #{e.message}"
       end
 
@@ -52,14 +53,14 @@ module FirebaseAuth
       https = Net::HTTP.new(uri.host, uri.port)
       https.use_ssl = true
 
-      res = https.start {
+      res = https.start do
         https.get(uri.request_uri)
-      }
+      end
       data = JSON.parse(res.body)
 
-      if (data['error']) then
-        msg = 'Error fetching public keys for Google certs: ' + data['error']
-        msg += " (#{res['error_description']})" if (data['error_description'])
+      if data['error']
+        msg = "Error fetching public keys for Google certs: #{data['error']}"
+        msg += " (#{res['error_description']})" if data['error_description']
 
         raise msg
       end
@@ -77,10 +78,10 @@ module FirebaseAuth
       return "Firebase ID token has incorrect \"aud\" (audience) claim. Expected \"#{project_id}\" but got \"#{payload['aud']}\"." unless payload['aud'] == project_id
 
       issuer = ISSUER_BASE_URL + project_id
-      return "Firebase ID token has incorrect \"iss\" (issuer) claim. Expected \"#{issuer}\" but got \"#{payload['iss']}\"."  unless payload['iss'] == issuer
+      return "Firebase ID token has incorrect \"iss\" (issuer) claim. Expected \"#{issuer}\" but got \"#{payload['iss']}\"." unless payload['iss'] == issuer
 
       return 'Firebase ID token has no "sub" (subject) claim.' unless payload['sub'].is_a?(String)
-      return 'Firebase ID token has an empty string "sub" (subject) claim.'  if payload['sub'].empty?
+      return 'Firebase ID token has an empty string "sub" (subject) claim.' if payload['sub'].empty?
       return 'Firebase ID token has "sub" (subject) claim longer than 128 characters.' if payload['sub'].size > 128
 
       nil
