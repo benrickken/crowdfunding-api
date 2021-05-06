@@ -3,7 +3,7 @@ class Api::V1::ProjectsController < ApplicationController
 
   def index
     projects = Project.order(created_at: :desc).includes(:user)
-    render json: { 
+    render json: {
       projects: projects.map { |project| ProjectSerializer.new(project: project).as_json }
     }
   end
@@ -20,7 +20,7 @@ class Api::V1::ProjectsController < ApplicationController
 
     uid = @auth[:data]['uid']
     user = User.find_by(uid: uid)
-    render json: { message: 'User does not exist' }, status: :bad_request and return if user.blank?    
+    render json: { message: 'User does not exist' }, status: :bad_request and return if user.blank?
 
     project = user.projects.new(project_params)
 
@@ -32,7 +32,7 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   private
-  
+
   def set_auth
     @auth = authenticate_token_by_firebase
   end

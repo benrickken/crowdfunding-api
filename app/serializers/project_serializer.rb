@@ -13,8 +13,8 @@ class ProjectSerializer
       supportersCount: @project.project_supports.count,
       supportedAmount: @project.supported_amount,
       user: {
-        name: @project.user.name,
-      },
+        name: @project.user.name
+      }
     }
   end
 end

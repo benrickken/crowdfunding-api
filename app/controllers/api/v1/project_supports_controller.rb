@@ -6,7 +6,7 @@ class Api::V1::ProjectSupportsController < ApplicationController
 
     uid = @auth[:data]['uid']
     user = User.find_by(uid: uid)
-    render json: { message: 'User does not exist' }, status: :bad_request and return if user.blank?    
+    render json: { message: 'User does not exist' }, status: :bad_request and return if user.blank?
 
     project_support = user.project_supports.new(project_support_params)
 
@@ -18,7 +18,7 @@ class Api::V1::ProjectSupportsController < ApplicationController
   end
 
   private
-  
+
   def set_auth
     @auth = authenticate_token_by_firebase
   end
