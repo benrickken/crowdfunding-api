@@ -33,7 +33,7 @@ class Api::V1::MesController < ApplicationController
 
     render json: { message: 'Could not find user.' }, status: :unauthorized and return unless user
 
-    backed_projects = user.backed_projects.includes(:user)
+    backed_projects = user.backed_projects.includes(:user).distinct
 
     render json: {
       backedProjects: backed_projects.map do |project|
