@@ -1,1 +1,1 @@
-project_id: crowdfunding-a6541
+project_id: <%= ENV['FIREBASE_PROJECT_ID'] %>
