@@ -1,1 +1,0 @@
-project_id: <%= ENV['FIREBASE_PROJECT_ID'] %>

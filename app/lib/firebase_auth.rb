@@ -1,7 +1,6 @@
 require 'net/http'
 
 module FirebaseAuth
-  CONFIG = YAML.load_file('config/firebase.yml')
   ALGORITHM = 'RS256'.freeze
   ISSUER_BASE_URL = 'https://securetoken.google.com/'.freeze
   CLIENT_CERT_URL = 'https://www.googleapis.com/robot/v1/metadata/x509/securetoken@system.gserviceaccount.com'.freeze
@@ -69,7 +68,7 @@ module FirebaseAuth
     end
 
     def _validate_jwt(json)
-      project_id = FirebaseAuth::CONFIG['project_id']
+      project_id = ENV['FIREBASE_PROJECT_ID']
       payload = json[:payload]
       header = json[:header]
 
