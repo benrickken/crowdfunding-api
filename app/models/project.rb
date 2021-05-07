@@ -8,7 +8,7 @@ class Project < ApplicationRecord
   validates :due_date, presence: true
 
   def supported_amount
-    project_supports.sum do |project_support|
+    project_supports.includes(:project_return).sum do |project_support|
       project_support.project_return.price
     end
   end

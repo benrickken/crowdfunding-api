@@ -25,6 +25,23 @@ class Api::V1::MesController < ApplicationController
     }
   end
 
+  def backed_projects
+    render json: @auth, status: :unauthorized and return unless @auth[:data]
+
+    uid = @auth[:data]['uid']
+    user = User.find_by(uid: uid)
+
+    render json: { message: 'Could not find user.' }, status: :unauthorized and return unless user
+
+    backed_projects = user.backed_projects.includes(:user)
+
+    render json: {
+      backedProjects: backed_projects.map do |project|
+                        ProjectSerializer.new(project: project).as_json
+                      end
+    }
+  end
+
   private
 
   def set_auth

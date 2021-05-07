@@ -3,7 +3,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :me, only: [:show] do
         collection do
-          get :projects
+          get :projects, :backed_projects
         end
       end
       resources :users, only: [:create]
