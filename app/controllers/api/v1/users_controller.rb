@@ -1,5 +1,5 @@
 class Api::V1::UsersController < ApplicationController
-  before_action :set_auth, only: %i[create me]
+  before_action :set_auth, only: %i[create]
 
   def create
     render json: @auth, status: :unauthorized and return unless @auth[:data]
@@ -11,17 +11,6 @@ class Api::V1::UsersController < ApplicationController
     else
       render json: user.errors.messages, status: :unprocessable_entity
     end
-  end
-
-  def me
-    render json: @auth, status: :unauthorized and return unless @auth[:data]
-
-    uid = @auth[:data]['uid']
-    user = User.find_by(uid: uid)
-
-    render json: { message: 'Could not find user.' }, status: :unauthorized and return unless user
-
-    render json: UserSerializer.new(user: user).as_json
   end
 
   private
