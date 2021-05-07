@@ -1,6 +1,7 @@
 class ProjectReturnSerializer
-  def initialize(project_return:)
+  def initialize(project_return:, user:)
     @project_return = project_return
+    @user = user
   end
 
   def as_json
@@ -10,7 +11,8 @@ class ProjectReturnSerializer
       capacity: @project_return.capacity,
       deliveryDate: @project_return.delivery_date,
       description: @project_return.description,
-      supportersCount: @project_return.project_supports.count
+      supportersCount: @project_return.project_supports.count,
+      isSupportedByMe: ProjectSupport.exists?(project_return: @project_return, user: @user)
     }
   end
 end
