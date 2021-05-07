@@ -1,7 +1,11 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      resource :me, only: [:show]
+      resource :me, only: [:show] do
+        collection do
+          get :projects
+        end
+      end
       resources :users, only: [:create]
       resources :projects, only: %i[index show create] do
         member do
