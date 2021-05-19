@@ -38,6 +38,6 @@ class Api::V1::ProjectsController < ApplicationController
   end
 
   def project_params
-    params.require(:project).permit(:title, :target_amount, :due_date, :description, project_returns_attributes: %i[price capacity delivery_date description])
+    params.require(:project).permit(:title, :image, :target_amount, :due_date, :description, project_returns_attributes: %i[price capacity delivery_date description])
   end
 end

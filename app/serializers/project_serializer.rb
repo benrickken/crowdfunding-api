@@ -12,6 +12,7 @@ class ProjectSerializer
       description: @project.description,
       supportersCount: @project.project_supports.count,
       supportedAmount: @project.supported_amount,
+      imageUrl: @project.image_url,
       user: {
         name: @project.user.name
       }
