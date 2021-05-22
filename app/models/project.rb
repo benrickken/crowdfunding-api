@@ -9,6 +9,7 @@ class Project < ApplicationRecord
 
   accepts_nested_attributes_for :project_returns
 
+  validates :user_id, presence: true
   validates :title, presence: true
   validates :target_amount, presence: true
   validates :due_date, presence: true
