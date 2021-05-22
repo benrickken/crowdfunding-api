@@ -8,13 +8,14 @@ RSpec.describe User, type: :model do
   end
 
   describe 'validation' do
+    let(:user) { create(:user) }
+
     it 'is invalid without uid' do
       expect(build(:user, uid: nil)).to be_invalid
     end
 
     it 'is invalid without unique uid' do
-      create(:user, uid: 'fca4b00f-1d50-4c71-bca5-51503b692bf6')
-      expect(build(:user, uid: 'fca4b00f-1d50-4c71-bca5-51503b692bf6')).to be_invalid
+      expect(build(:user, uid: user.uid)).to be_invalid
     end
 
     it 'is invalid without name' do
