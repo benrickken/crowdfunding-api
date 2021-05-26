@@ -28,4 +28,28 @@ RSpec.describe ProjectReturn, type: :model do
       expect(build(:project_return, description: nil)).to be_invalid
     end
   end
+
+  describe 'instance methods' do
+    describe '#created_by?' do
+      let(:user) { build(:user) }
+      let(:project) { build(:project, user: user) }
+      let(:project_return) { build(:project_return, project: project) }
+
+      subject { project_return.created_by?(user) }
+
+      context 'when user doesn\'t exist' do
+        let(:user) { nil }
+        it { is_expected.to eq(false) }
+      end
+
+      context 'when user exists but project is not created by user' do
+        let(:user) { build(:user) }
+        it { is_expected.to eq(true) }
+      end
+
+      context 'when project is created by user' do
+        it { is_expected.to eq(true) }
+      end
+    end
+  end
 end

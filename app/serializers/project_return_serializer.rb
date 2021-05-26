@@ -12,7 +12,7 @@ class ProjectReturnSerializer
       deliveryDate: @project_return.delivery_date,
       description: @project_return.description,
       supportersCount: @project_return.project_supports.count,
-      isCreatedByMe: @project_return.project.user.id == @user.try(:id),
+      isCreatedByMe: @project_return.created_by?(@user),
       isSupportedByMe: ProjectSupport.exists?(project_return: @project_return, user: @user)
     }
   end

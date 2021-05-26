@@ -7,4 +7,10 @@ class ProjectReturn < ApplicationRecord
   validates :capacity, presence: true
   validates :delivery_date, presence: true
   validates :description, presence: true
+
+  def created_by?(user)
+    return false unless user
+
+    project.user.try(:id) == user.id
+  end
 end
