@@ -1,50 +1,23 @@
 class Api::V1::MesController < ApplicationController
-  before_action :set_auth
+  before_action :authenticate_user!
 
   def show
-    render json: @auth, status: :unauthorized and return unless @auth[:data]
-
-    uid = @auth[:data]['uid']
-    user = User.find_by(uid: uid)
-
-    render json: { message: 'Could not find user.' }, status: :unauthorized and return unless user
-
-    render json: UserSerializer.new(user: user).as_json
+    render json: UserSerializer.new(user: current_user).as_json
   end
 
   def projects
-    render json: @auth, status: :unauthorized and return unless @auth[:data]
-
-    uid = @auth[:data]['uid']
-    user = User.find_by(uid: uid)
-
-    render json: { message: 'Could not find user.' }, status: :unauthorized and return unless user
-
     render json: {
-      projects: user.projects.map { |project| ProjectSerializer.new(project: project).as_json }
+      projects: current_user.projects.map { |project| ProjectSerializer.new(project: project).as_json }
     }
   end
 
   def backed_projects
-    render json: @auth, status: :unauthorized and return unless @auth[:data]
-
-    uid = @auth[:data]['uid']
-    user = User.find_by(uid: uid)
-
-    render json: { message: 'Could not find user.' }, status: :unauthorized and return unless user
-
-    backed_projects = user.backed_projects.includes(:user).distinct
+    backed_projects = current_user.backed_projects.includes(:user).distinct
 
     render json: {
       backedProjects: backed_projects.map do |project|
                         ProjectSerializer.new(project: project).as_json
                       end
     }
-  end
-
-  private
-
-  def set_auth
-    @auth = authenticate_token_by_firebase
   end
 end
