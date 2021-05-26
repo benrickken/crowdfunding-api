@@ -31,8 +31,8 @@ RSpec.describe ProjectReturn, type: :model do
 
   describe 'instance methods' do
     describe '#created_by?' do
-      let(:user) { build(:user) }
-      let(:project) { build(:project, user: user) }
+      let(:user) { create(:user) }
+      let(:project) { build(:project) }
       let(:project_return) { build(:project_return, project: project) }
 
       subject { project_return.created_by?(user) }
@@ -43,11 +43,11 @@ RSpec.describe ProjectReturn, type: :model do
       end
 
       context 'when user exists but project_return is not created by user' do
-        let(:project) { build(:project) }
         it { is_expected.to eq(false) }
       end
 
       context 'when project_return is created by user' do
+        let(:project) { create(:project, user: user) }
         it { is_expected.to eq(true) }
       end
     end

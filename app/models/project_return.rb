@@ -9,14 +9,10 @@ class ProjectReturn < ApplicationRecord
   validates :description, presence: true
 
   def created_by?(user)
-    return false unless user
-
-    project.user.try(:id) == user.id
+    project.user_id == user&.id
   end
 
   def supported_by?(user)
-    return false unless user
-
     project_supports.exists?(user: user)
   end
 end
