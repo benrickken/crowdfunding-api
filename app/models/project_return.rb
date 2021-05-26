@@ -13,4 +13,10 @@ class ProjectReturn < ApplicationRecord
 
     project.user.try(:id) == user.id
   end
+
+  def supported_by?(user)
+    return false unless user
+
+    project_supports.exists?(user: user)
+  end
 end

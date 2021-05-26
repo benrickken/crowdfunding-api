@@ -42,12 +42,38 @@ RSpec.describe ProjectReturn, type: :model do
         it { is_expected.to eq(false) }
       end
 
-      context 'when user exists but project is not created by user' do
-        let(:user) { build(:user) }
-        it { is_expected.to eq(true) }
+      context 'when user exists but project_return is not created by user' do
+        let(:project) { build(:project) }
+        it { is_expected.to eq(false) }
       end
 
-      context 'when project is created by user' do
+      context 'when project_return is created by user' do
+        it { is_expected.to eq(true) }
+      end
+    end
+
+    describe '#supported_by?' do
+      let(:user) { create(:user) }
+      let(:project_return) { create(:project_return) }
+
+      subject { project_return.supported_by?(user) }
+
+      context 'when user doesn\'t exist' do
+        let(:user) { nil }
+        it { is_expected.to eq(false) }
+      end
+
+      context 'when user exists but project_return is not supported by user' do
+        before do
+          create(:project_support, project_return: project_return)
+        end
+        it { is_expected.to eq(false) }
+      end
+
+      context 'when project_return is supported by user' do
+        before do
+          create(:project_support, project_return: project_return, user: user)
+        end
         it { is_expected.to eq(true) }
       end
     end
