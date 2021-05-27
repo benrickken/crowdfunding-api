@@ -12,7 +12,7 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate_user!
-    render json: { message: 'Could not find user.' }, status: :unauthorized and return unless current_user.present?
+    render json: { message: 'Could not find user.' }, status: :unauthorized and return unless current_user
   end
 
   def current_user
