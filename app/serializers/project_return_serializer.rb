@@ -12,7 +12,8 @@ class ProjectReturnSerializer
       deliveryDate: @project_return.delivery_date,
       description: @project_return.description,
       supportersCount: @project_return.project_supports.count,
-      isSupportedByMe: ProjectSupport.exists?(project_return: @project_return, user: @user)
+      isCreatedByMe: @project_return.project.created_by?(@user),
+      isSupportedByMe: @project_return.supported_by?(@user)
     }
   end
 end
