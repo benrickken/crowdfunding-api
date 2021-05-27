@@ -58,5 +58,25 @@ RSpec.describe Project, type: :model do
       subject { project.supported_amount }
       it { is_expected.to eq(70_000) }
     end
+
+    describe '#created_by?' do
+      let(:user) { create(:user) }
+
+      subject { project.created_by?(user) }
+
+      context 'when user doesn\'t exist' do
+        let(:user) { nil }
+        it { is_expected.to eq(false) }
+      end
+
+      context 'when user exists but project is not created by user' do
+        it { is_expected.to eq(false) }
+      end
+
+      context 'when project is created by user' do
+        let(:project) { create(:project, user: user) }
+        it { is_expected.to eq(true) }
+      end
+    end
   end
 end

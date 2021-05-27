@@ -23,4 +23,8 @@ class Project < ApplicationRecord
       project_support.project_return.price
     end
   end
+
+  def created_by?(user)
+    user_id == user&.id
+  end
 end

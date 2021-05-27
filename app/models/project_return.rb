@@ -8,10 +8,6 @@ class ProjectReturn < ApplicationRecord
   validates :delivery_date, presence: true
   validates :description, presence: true
 
-  def created_by?(user)
-    project.user_id == user&.id
-  end
-
   def supported_by?(user)
     project_supports.exists?(user: user)
   end
