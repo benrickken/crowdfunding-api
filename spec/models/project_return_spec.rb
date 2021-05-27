@@ -28,4 +28,32 @@ RSpec.describe ProjectReturn, type: :model do
       expect(build(:project_return, description: nil)).to be_invalid
     end
   end
+
+  describe 'instance methods' do
+    describe '#supported_by?' do
+      let(:user) { create(:user) }
+      let(:project_return) { create(:project_return) }
+
+      subject { project_return.supported_by?(user) }
+
+      context 'when user doesn\'t exist' do
+        let(:user) { nil }
+        it { is_expected.to eq(false) }
+      end
+
+      context 'when user exists but project_return is not supported by user' do
+        before do
+          create(:project_support, project_return: project_return)
+        end
+        it { is_expected.to eq(false) }
+      end
+
+      context 'when project_return is supported by user' do
+        before do
+          create(:project_support, project_return: project_return, user: user)
+        end
+        it { is_expected.to eq(true) }
+      end
+    end
+  end
 end

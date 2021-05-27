@@ -7,4 +7,8 @@ class ProjectReturn < ApplicationRecord
   validates :capacity, presence: true
   validates :delivery_date, presence: true
   validates :description, presence: true
+
+  def supported_by?(user)
+    project_supports.exists?(user: user)
+  end
 end
