@@ -23,6 +23,10 @@ RSpec.describe Project, type: :model do
     it 'is invalid without due_date' do
       expect(build(:project, due_date: nil)).to be_invalid
     end
+
+    it 'is invalid without complete_flag' do
+      expect(build(:project, complete_flag: nil)).to be_invalid
+    end
   end
 
   describe 'instance methods' do
