@@ -4,11 +4,15 @@ class Api::V1::ProjectSupportsController < ApplicationController
   def create
     project_support = current_user.project_supports.new(project_support_params)
 
-    if project_support.save
-      render json: { project_support: project_support }
-    else
-      render json: project_support.errors.messages, status: :unprocessable_entity
+    ActiveRecord::Base.transaction do
+      project_support.save!
+      project = project_support.project_return.project
+      project.update!(complete_flag: true) if project.supported_amount >= project.target_amount
     end
+
+    render json: { project_support: project_support }
+  rescue StandardError => e
+    render json: e, status: :unprocessable_entity
   end
 
   private
