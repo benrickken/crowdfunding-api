@@ -69,7 +69,7 @@ ActiveRecord::Schema.define(version: 2021_05_29_030033) do
     t.text "description"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.boolean "complete_flag", default: false
+    t.integer "progress", default: 0
     t.index ["user_id"], name: "index_projects_on_user_id"
   end
 

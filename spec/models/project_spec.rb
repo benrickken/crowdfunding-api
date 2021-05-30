@@ -24,8 +24,8 @@ RSpec.describe Project, type: :model do
       expect(build(:project, due_date: nil)).to be_invalid
     end
 
-    it 'is invalid without complete_flag' do
-      expect(build(:project, complete_flag: nil)).to be_invalid
+    it 'is invalid without progress' do
+      expect(build(:project, progress: nil)).to be_invalid
     end
   end
 

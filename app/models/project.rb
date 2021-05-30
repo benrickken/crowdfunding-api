@@ -13,7 +13,9 @@ class Project < ApplicationRecord
   validates :title, presence: true
   validates :target_amount, presence: true
   validates :due_date, presence: true
-  validates :complete_flag, inclusion: { in: [true, false] }
+  validates :progress, presence: true
+
+  enum progress: %i[incomplete completed]
 
   def image_url
     image.attached? ? url_for(image) : nil

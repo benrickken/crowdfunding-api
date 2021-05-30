@@ -7,7 +7,7 @@ class Api::V1::ProjectSupportsController < ApplicationController
     ActiveRecord::Base.transaction do
       project_support.save!
       project = project_support.project_return.project
-      project.update!(complete_flag: true) if project.supported_amount >= project.target_amount
+      project.completed! if project.supported_amount >= project.target_amount
     end
 
     render json: { project_support: project_support }
