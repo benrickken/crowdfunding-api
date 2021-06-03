@@ -13,6 +13,9 @@ class Project < ApplicationRecord
   validates :title, presence: true
   validates :target_amount, presence: true
   validates :due_date, presence: true
+  validates :progress, presence: true
+
+  enum progress: { incomplete: 0, completed: 1 }
 
   def image_url
     image.attached? ? url_for(image) : nil
@@ -26,5 +29,9 @@ class Project < ApplicationRecord
 
   def created_by?(user)
     user_id == user&.id
+  end
+
+  def update_if_complete!
+    completed! if supported_amount >= target_amount
   end
 end

@@ -23,6 +23,10 @@ RSpec.describe Project, type: :model do
     it 'is invalid without due_date' do
       expect(build(:project, due_date: nil)).to be_invalid
     end
+
+    it 'is invalid without progress' do
+      expect(build(:project, progress: nil)).to be_invalid
+    end
   end
 
   describe 'instance methods' do
@@ -76,6 +80,28 @@ RSpec.describe Project, type: :model do
       context 'when project is created by user' do
         let(:project) { create(:project, user: user) }
         it { is_expected.to eq(true) }
+      end
+    end
+
+    describe '#update_if_complete!' do
+      let(:project) { create(:project, target_amount: 10_000, progress: 'incomplete') }
+      subject { project.update_if_complete! }
+
+      context 'when supported_amount reaches target_amount' do
+        before do
+          project_return = create(:project_return, project: project, price: 10_000)
+          create(:project_support, project_return: project_return)
+        end
+
+        it 'changes project progress to completed' do
+          expect { subject }.to change(project, :progress).to('completed')
+        end
+      end
+
+      context 'when supported_amount has not reached target_amount' do
+        it 'keeps project progress incomplete' do
+          expect { subject }.not_to change(project, :progress)
+        end
       end
     end
   end

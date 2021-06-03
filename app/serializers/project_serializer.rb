@@ -10,6 +10,7 @@ class ProjectSerializer
       targetAmount: @project.target_amount,
       dueDate: @project.due_date,
       description: @project.description,
+      progress: @project.progress,
       supportersCount: @project.project_supports.count,
       supportedAmount: @project.supported_amount,
       imageUrl: @project.image_url,

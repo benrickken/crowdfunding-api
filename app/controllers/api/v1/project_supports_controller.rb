@@ -2,13 +2,9 @@ class Api::V1::ProjectSupportsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    project_support = current_user.project_supports.new(project_support_params)
+    project_support = ProjectSupport.create_with_complete_check!(user: current_user, params: project_support_params)
 
-    if project_support.save
-      render json: { project_support: project_support }
-    else
-      render json: project_support.errors.messages, status: :unprocessable_entity
-    end
+    render json: { project_support: project_support }
   end
 
   private
