@@ -1,6 +1,10 @@
 class ApplicationController < ActionController::API
   include ActionController::HttpAuthentication::Token::ControllerMethods
 
+  rescue_from UnauthenticatedError do
+    render(status: :unauthorized, json: { message: 'Could not authenticate user.' })
+  end
+
   def authenticate_token_by_firebase
     authenticate_with_http_token do |token, _|
       return { data: FirebaseAuth.verify_id_token(token) }
@@ -12,7 +16,7 @@ class ApplicationController < ActionController::API
   end
 
   def authenticate_user!
-    render json: { message: 'Could not find user.' }, status: :unauthorized and return unless current_user
+    raise UnauthenticatedError unless current_user
   end
 
   def current_user
