@@ -19,9 +19,7 @@ class Project < ApplicationRecord
   end
 
   def supported_amount
-    project_supports.includes(:project_return).sum do |project_support|
-      project_support.project_return.price
-    end
+    project_supports.includes(:project_return).sum('project_returns.price')
   end
 
   def created_by?(user)
