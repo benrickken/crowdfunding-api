@@ -30,4 +30,8 @@ class Project < ApplicationRecord
   def created_by?(user)
     user_id == user&.id
   end
+
+  def update_if_complete!
+    completed! if supported_amount >= target_amount
+  end
 end

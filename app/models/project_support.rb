@@ -11,7 +11,7 @@ class ProjectSupport < ApplicationRecord
     ActiveRecord::Base.transaction do
       project_support.save!
       project = project_support.project_return.project
-      project.completed! if project.supported_amount >= project.target_amount
+      project.update_if_complete!
     end
 
     project_support
