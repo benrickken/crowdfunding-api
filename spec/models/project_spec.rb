@@ -94,8 +94,7 @@ RSpec.describe Project, type: :model do
         end
 
         it 'changes project progress to completed' do
-          subject
-          expect(project.progress).to eq 'completed'
+          expect { subject }.to change(project, :progress).to('completed')
         end
       end
 
