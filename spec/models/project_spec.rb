@@ -82,5 +82,28 @@ RSpec.describe Project, type: :model do
         it { is_expected.to eq(true) }
       end
     end
+
+    describe '#update_if_complete!' do
+      let(:project) { create(:project, target_amount: 10_000, progress: 'incomplete') }
+      subject { project.update_if_complete! }
+
+      context 'when supported_amount reaches target_amount' do
+        before do
+          project_return = create(:project_return, project: project, price: 10_000)
+          create(:project_support, project_return: project_return)
+        end
+
+        it 'changes project progress to completed' do
+          subject
+          expect(project.progress).to eq 'completed'
+        end
+      end
+
+      context 'when supported_amount has not reached target_amount' do
+        it 'keeps project progress incomplete' do
+          expect(project.progress).to eq 'incomplete'
+        end
+      end
+    end
   end
 end
