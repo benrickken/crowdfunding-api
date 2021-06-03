@@ -15,7 +15,7 @@ class Project < ApplicationRecord
   validates :due_date, presence: true
   validates :progress, presence: true
 
-  enum progress: %i[incomplete completed]
+  enum progress: { incomplete: 0, completed: 1 }
 
   def image_url
     image.attached? ? url_for(image) : nil
