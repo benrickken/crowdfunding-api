@@ -100,7 +100,7 @@ RSpec.describe Project, type: :model do
 
       context 'when supported_amount has not reached target_amount' do
         it 'keeps project progress incomplete' do
-          expect(project.progress).to eq 'incomplete'
+          expect { subject }.not_to change(project, :progress)
         end
       end
     end
