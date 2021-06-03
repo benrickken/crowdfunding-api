@@ -2,7 +2,7 @@ class Api::V1::ProjectSupportsController < ApplicationController
   before_action :authenticate_user!
 
   def create
-    project_support = ProjectSupport.create_and_update_project_progress!(user: current_user, params: project_support_params)
+    project_support = ProjectSupport.create_with_complete_check!(user: current_user, params: project_support_params)
 
     render json: { project_support: project_support }
   end

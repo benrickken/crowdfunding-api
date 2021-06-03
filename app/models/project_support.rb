@@ -5,7 +5,7 @@ class ProjectSupport < ApplicationRecord
   validates :project_return_id, presence: true, uniqueness: { scope: :user_id }
   validates :user_id, presence: true
 
-  def self.create_and_update_project_progress!(user:, params:)
+  def self.create_with_complete_check!(user:, params:)
     project_support = user.project_supports.new(params)
 
     ActiveRecord::Base.transaction do
