@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  namespace :admin do
+    resources :projects, only: %i[index]
+  end
+
   namespace :api do
     namespace :v1 do
       resource :me, only: [:show] do
