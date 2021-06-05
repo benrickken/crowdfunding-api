@@ -1,4 +1,4 @@
-class Api::V1::ProjectsController < ApplicationController
+class Api::V1::ProjectsController < Api::V1::BaseController
   before_action :authenticate_user!, only: [:create]
 
   def index
