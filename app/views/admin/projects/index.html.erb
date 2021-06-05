@@ -1,3 +1,20 @@
-<% @projects.each do |project| %>
-  <%= project.title %>
-<% end %>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>User</th>
+      <th>Due Date</th>
+      <th>Progress</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.title %></td>
+        <td><%= project.user.name %></td>
+        <td><%= project.due_date %></td>
+        <td><%= project.progress %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
