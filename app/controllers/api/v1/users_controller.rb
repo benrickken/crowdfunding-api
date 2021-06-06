@@ -1,4 +1,4 @@
-class Api::V1::UsersController < ApplicationController
+class Api::V1::UsersController < Api::V1::BaseController
   def create
     auth = authenticate_token_by_firebase
     raise UnanthenticatedError unless auth[:data]

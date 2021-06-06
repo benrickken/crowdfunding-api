@@ -1,4 +1,4 @@
-class Api::V1::ProjectSupportsController < ApplicationController
+class Api::V1::ProjectSupportsController < Api::V1::BaseController
   before_action :authenticate_user!
 
   def create
