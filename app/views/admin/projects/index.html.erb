@@ -12,7 +12,7 @@
 
     <div class="col-4">
       <%= f.label :progress_eq %>
-      <%= f.select :progress_eq, Project.progresses.to_a, { include_blank: true }, class: "form-control" %>
+      <%= f.select :progress_eq, Project.progresses, { include_blank: true }, class: "form-control" %>
     </div>
 
     <div class="col-12">
