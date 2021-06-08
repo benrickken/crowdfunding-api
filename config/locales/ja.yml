@@ -1,0 +1,6 @@
+ja:
+  enums:
+    project:
+      progress:
+        incomplete: 未達成
+        completed: 達成済
