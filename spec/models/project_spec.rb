@@ -96,6 +96,10 @@ RSpec.describe Project, type: :model do
         it 'changes project progress to completed' do
           expect { subject }.to change(project, :progress).to('completed')
         end
+
+        it 'changes project completed_at to current time' do
+          expect { subject }.to change(project, :completed_at).to be_within(1.second).of(Time.zone.now)
+        end
       end
 
       context 'when supported_amount has not reached target_amount' do

@@ -30,6 +30,6 @@ class Project < ApplicationRecord
   end
 
   def update_if_complete!
-    completed! if supported_amount >= target_amount
+    update!(progress: :completed, completed_at: Time.zone.now) if supported_amount >= target_amount
   end
 end
