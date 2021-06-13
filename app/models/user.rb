@@ -5,5 +5,6 @@ class User < ApplicationRecord
   has_many :backed_projects, through: :project_returns, source: :project
 
   validates :uid, presence: true, uniqueness: true
+  validates :email, presence: true, uniqueness: true
   validates :name, presence: true
 end
