@@ -98,7 +98,8 @@ RSpec.describe Project, type: :model do
         end
 
         it 'changes project completed_at to current time' do
-          expect { subject }.to change(project, :completed_at).to be_within(1.second).of(Time.zone.now)
+          subject
+          expect(project.completed_at).not_to be_nil
         end
       end
 
