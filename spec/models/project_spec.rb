@@ -96,6 +96,11 @@ RSpec.describe Project, type: :model do
         it 'changes project progress to completed' do
           expect { subject }.to change(project, :progress).to('completed')
         end
+
+        it 'changes project completed_at to current time' do
+          subject
+          expect(project.completed_at).not_to be_nil
+        end
       end
 
       context 'when supported_amount has not reached target_amount' do
