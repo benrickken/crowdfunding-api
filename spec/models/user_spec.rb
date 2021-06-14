@@ -18,6 +18,14 @@ RSpec.describe User, type: :model do
       expect(build(:user, uid: user.uid)).to be_invalid
     end
 
+    it 'is invalid without email' do
+      expect(build(:user, email: nil)).to be_invalid
+    end
+
+    it 'is invalid without unique email' do
+      expect(build(:user, email: user.email)).to be_invalid
+    end
+
     it 'is invalid without name' do
       expect(build(:user, name: nil)).to be_invalid
     end

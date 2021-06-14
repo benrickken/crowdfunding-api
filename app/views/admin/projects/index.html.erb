@@ -1,3 +1,47 @@
-<% @projects.each do |project| %>
-  <%= project.title %>
+<%= search_form_for [:admin, @q] do |f| %>
+  <div class="row g-3">
+    <div class="col-4">
+      <%= f.label :title_cont %>
+      <%= f.search_field :title_cont, class: "form-control" %>
+    </div>
+
+    <div class="col-4">
+      <%= f.label :target_amount_gteq %>
+      <%= f.search_field :target_amount_gteq, class: "form-control" %>
+    </div>
+
+    <div class="col-4">
+      <%= f.label :progress_eq %>
+      <%= f.select :progress_eq, Project.progresses, { include_blank: true }, class: "form-control" %>
+    </div>
+
+    <div class="col-12">
+      <%= f.submit 'Search', class: "btn btn-primary" %>
+    </div>
+  </div>
 <% end %>
+
+<%= @projects.count %> results found.
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>User</th>
+      <th>Target Amount</th>
+      <th>Due Date</th>
+      <th>Progress</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @projects.each do |project| %>
+      <tr>
+        <td><%= project.title %></td>
+        <td><%= project.user.name %></td>
+        <td>¥<%= project.target_amount %></td>
+        <td><%= project.due_date %></td>
+        <td><%= project.progress %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

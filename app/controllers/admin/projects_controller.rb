@@ -1,5 +1,6 @@
 class Admin::ProjectsController < Admin::BaseController
   def index
-    @projects = Project.all
+    @q = Project.includes(:user).ransack(params[:q])
+    @projects = @q.result
   end
 end
