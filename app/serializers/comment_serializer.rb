@@ -7,6 +7,7 @@ class CommentSerializer
     {
       id: @comment.id,
       body: @comment.body,
+      createdAt: @comment.created_at,
       user: {
         name: @comment.user.name
       }
