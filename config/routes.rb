@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resources :projects, only: %i[index show create] do
         member do
           resources :project_returns, only: [:index]
+          resources :comments, only: [:index]
         end
       end
       resources :project_supports, only: [:create]
