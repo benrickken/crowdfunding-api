@@ -18,10 +18,8 @@ Rails.application.routes.draw do
       end
       resources :users, only: [:create]
       resources :projects, only: %i[index show create] do
-        member do
-          resources :project_returns, only: [:index]
-          resources :comments, only: [:index]
-        end
+        resources :project_returns, only: [:index]
+        resources :comments, only: %i[index create edit]
       end
       resources :project_supports, only: [:create]
     end

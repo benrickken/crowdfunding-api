@@ -1,6 +1,6 @@
 class Api::V1::ProjectReturnsController < Api::V1::BaseController
   def index
-    project = Project.find(params[:id])
+    project = Project.find(params[:project_id])
     project_returns = project.project_returns
 
     render json: {
