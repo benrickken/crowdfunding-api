@@ -18,7 +18,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
     if comment.save
       render json: { comment: comment }
     else
-      render json: project.errors.messages, status: :unprocessable_entity
+      render json: comment.errors.messages, status: :unprocessable_entity
     end
   end
 
