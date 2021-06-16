@@ -17,6 +17,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
     comment.project = @project
 
     if comment.save
+      CommentMailer.with(comment: comment).new_comment_email.deliver_later
       render json: { comment: comment }
     else
       render json: comment.errors.full_messages, status: :unprocessable_entity
