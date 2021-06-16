@@ -4,6 +4,7 @@ class Project < ApplicationRecord
   belongs_to :user
   has_many :project_returns
   has_many :project_supports, through: :project_returns
+  has_many :comments
 
   has_one_attached :image
 
