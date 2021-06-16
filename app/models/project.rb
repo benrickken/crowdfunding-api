@@ -16,6 +16,8 @@ class Project < ApplicationRecord
   validates :due_date, presence: true
   validates :progress, presence: true
 
+  scope :completed_yesterday, -> { where(completed_at: 1.day.ago.beginning_of_day..1.day.ago.end_of_day) }
+
   enum progress: { incomplete: 0, completed: 1 }
 
   def image_url
