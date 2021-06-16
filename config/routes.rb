@@ -1,4 +1,10 @@
+require 'sidekiq/web'
+
 Rails.application.routes.draw do
+  Rails.application.routes.draw do
+    mount Sidekiq::Web => '/sidekiq'
+  end
+
   namespace :admin do
     resources :projects, only: %i[index]
   end

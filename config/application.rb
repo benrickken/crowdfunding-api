@@ -39,5 +39,7 @@ module CrowdfundingApi
 
     config.middleware.use ActionDispatch::Flash
     config.middleware.use Rack::MethodOverride
+
+    config.active_job.queue_adapter = :sidekiq
   end
 end
