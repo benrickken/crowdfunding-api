@@ -1,6 +1,6 @@
 FactoryBot.define do
   factory :project_return do
-    association :project, strategy: :create
+    project
     price { 10_000 }
     capacity { 100 }
     delivery_date { '2021-06-30' }

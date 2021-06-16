@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :comment do
-    association :project, strategy: :create
-    association :user, strategy: :create
+    project
+    user
     body { 'My Comment' }
   end
 end
