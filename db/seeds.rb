@@ -32,3 +32,15 @@ unless Project.any?
     end
   end
 end
+
+unless Comment.any?
+  3.times do
+    Comment.create!(
+      {
+        project: Project.first,
+        user: User.first,
+        body: 'コメント'
+      }
+    )
+  end
+end
