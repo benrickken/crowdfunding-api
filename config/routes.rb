@@ -13,7 +13,7 @@ Rails.application.routes.draw do
     namespace :v1 do
       resource :me, only: [:show] do
         collection do
-          get :projects, :backed_projects
+          get :projects, :backed_projects, :notifications
         end
       end
       resources :users, only: [:create]

@@ -5,6 +5,12 @@ class Api::V1::MesController < Api::V1::BaseController
     render json: UserSerializer.new(user: current_user).as_json
   end
 
+  def notifications
+    render json: {
+      notifications: current_user.notifications.map { |notification| NotificationSerializer.new(notification: notification).as_json }
+    }
+  end
+
   def projects
     render json: {
       projects: current_user.projects.map { |project| ProjectSerializer.new(project: project).as_json }
