@@ -8,8 +8,6 @@ RSpec.describe Notification, type: :model do
   end
 
   describe 'validation' do
-    let(:notification) { create(:notification) }
-
     it 'is invalid without body' do
       expect(build(:notification, body: nil)).to be_invalid
     end
