@@ -13,10 +13,8 @@ class Api::V1::CommentsController < Api::V1::BaseController
   end
 
   def create
-    comment = current_user.comments.new(comment_params)
-    comment.project = @project
-
-    if comment.save
+    comment = Comment.create_with_notification(user: current_user, project: @project, params: comment_params)
+    if comment.persisted?
       CommentMailer.with(comment: comment).new_comment_email.deliver_later
       render json: { comment: comment }
     else
