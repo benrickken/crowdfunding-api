@@ -5,11 +5,7 @@ class Api::V1::CommentsController < Api::V1::BaseController
   def index
     comments = @project.comments.includes(:user).order(created_at: :desc)
 
-    render json: {
-      comments: comments.map do |comment|
-                  CommentSerializer.new(comment: comment).as_json
-                end
-    }
+    render json: { comments: CommentSerializer.as_json_all(comments) }
   end
 
   def create

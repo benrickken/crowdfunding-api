@@ -1,5 +1,5 @@
-class CommentSerializer
-  def initialize(comment:)
+class CommentSerializer < BaseSerializer
+  def initialize(comment)
     @comment = comment
   end
 
