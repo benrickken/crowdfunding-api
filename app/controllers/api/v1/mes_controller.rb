@@ -6,8 +6,9 @@ class Api::V1::MesController < Api::V1::BaseController
   end
 
   def notifications
+    notifications = current_user.notifications.order(created_at: :desc)
     render json: {
-      notifications: current_user.notifications.map { |notification| NotificationSerializer.new(notification: notification).as_json }
+      notifications: notifications.map { |notification| NotificationSerializer.new(notification: notification).as_json }
     }
   end
 
