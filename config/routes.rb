@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resource :me, only: [:show] do
         collection do
           get :projects, :backed_projects, :notifications
+          patch :read_notifications
         end
       end
       resources :users, only: [:create]
