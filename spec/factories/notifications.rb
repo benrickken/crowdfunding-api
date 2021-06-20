@@ -3,5 +3,6 @@ FactoryBot.define do
     user
     body { 'My Notification' }
     status { :unread }
+    link { '/projects/1' }
   end
 end
