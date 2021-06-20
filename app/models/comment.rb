@@ -12,7 +12,12 @@ class Comment < ApplicationRecord
 
     ActiveRecord::Base.transaction do
       comment.save!
-      Notification.create!(user: project.user, body: "「#{project.title}」に新しいコメントが届いています。", status: :unread)
+      Notification.create!(
+        user: project.user,
+        body: "「#{project.title}」に新しいコメントが届いています。",
+        status: :unread,
+        link: "/projects/#{project.id}"
+      )
       comment
     end
   end
