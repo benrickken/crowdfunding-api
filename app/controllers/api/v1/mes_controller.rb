@@ -13,7 +13,7 @@ class Api::V1::MesController < Api::V1::BaseController
   end
 
   def read_notifications
-    current_user.notifications.unread.update_all(status: :read)
+    current_user.notifications.unread.update_all(status: :read, updated_at: Time.zone.now)
     head :ok
   end
 
