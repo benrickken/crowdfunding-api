@@ -8,6 +8,7 @@ class NotificationSerializer
       id: @notification.id,
       body: @notification.body,
       status: @notification.status,
+      link: @notification.link,
       createdAt: @notification.created_at
     }
   end
