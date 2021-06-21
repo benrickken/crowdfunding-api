@@ -12,6 +12,11 @@ class Api::V1::MesController < Api::V1::BaseController
     }
   end
 
+  def read_notifications
+    current_user.notifications.unread.update_all(status: :read, updated_at: Time.zone.now)
+    head :ok
+  end
+
   def projects
     render json: {
       projects: current_user.projects.map { |project| ProjectSerializer.new(project: project).as_json }

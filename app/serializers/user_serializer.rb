@@ -6,7 +6,8 @@ class UserSerializer
   def as_json
     {
       id: @user.id,
-      name: @user.name
+      name: @user.name,
+      unreadNotificationsCount: @user.notifications.unread.count
     }
   end
 end
