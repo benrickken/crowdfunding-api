@@ -21,6 +21,7 @@ Rails.application.routes.draw do
       resources :projects, only: %i[index show create] do
         resources :project_returns, only: [:index]
         resources :comments, only: %i[index create edit]
+        resource :favorite, only: %i[show create destroy]
       end
       resources :project_supports, only: [:create]
     end
