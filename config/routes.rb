@@ -6,7 +6,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
-    resources :users, only: %i[index show]
+    resources :users, only: %i[index show update]
     resources :projects, only: %i[index]
   end
 
