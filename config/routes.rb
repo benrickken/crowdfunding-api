@@ -6,6 +6,7 @@ Rails.application.routes.draw do
   end
 
   namespace :admin do
+    resources :users, only: %i[index]
     resources :projects, only: %i[index]
   end
 
