@@ -13,6 +13,7 @@ class ProjectSerializer
       progress: @project.progress,
       supportersCount: @project.project_supports.count,
       supportedAmount: @project.supported_amount,
+      favoritedCount: @project.favorites.count,
       imageUrl: @project.image_url,
       user: {
         name: @project.user.name
