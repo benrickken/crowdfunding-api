@@ -20,6 +20,6 @@ class Admin::UsersController < Admin::BaseController
   private
 
   def user_params
-    params.require(:user).permit(project_ids: [])
+    params.require(:user).permit(favorited_project_ids: [])
   end
 end
