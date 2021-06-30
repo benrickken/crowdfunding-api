@@ -5,6 +5,8 @@ class User < ApplicationRecord
   has_many :backed_projects, through: :project_returns, source: :project
   has_many :comments
   has_many :notifications
+  has_many :favorites
+  has_many :favorited_projects, through: :favorites, source: :project
 
   validates :uid, presence: true, uniqueness: true
   validates :email, presence: true, uniqueness: true

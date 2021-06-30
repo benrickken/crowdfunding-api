@@ -1,0 +1,27 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>UID</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><%= @user.name %></td>
+      <td><%= @user.uid %></td>
+      <td><%= @user.email %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= form_with(model: [:admin, @user], local: true) do |form| %>
+  <div class="field">
+    <%= form.label :projects %>
+    <%= form.collection_check_boxes :favorited_project_ids, Project.all, :id, :title %>
+  </div>
+
+  <div class="actions">
+    <%= form.submit %>
+  </div>
+<% end %>
