@@ -11,9 +11,9 @@ class ProjectSerializer
       dueDate: @project.due_date,
       description: @project.description,
       progress: @project.progress,
-      supportersCount: @project.project_supports.count,
-      supportedAmount: @project.supported_amount,
-      favoritedCount: @project.favorites.count,
+      supportersCount: @project.project_supports_count,
+      supportedAmount: @project.total_supported_amount,
+      favoritedCount: @project.favorites_count,
       imageUrl: @project.image_url,
       user: {
         name: @project.user.name

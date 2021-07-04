@@ -2,7 +2,12 @@ class Api::V1::ProjectsController < Api::V1::BaseController
   before_action :authenticate_user!, only: [:create]
 
   def index
-    projects = Project.order(created_at: :desc).includes(:user)
+    projects = Project.order(created_at: :desc)
+                      .includes(:user, { image_attachment: :blob })
+                      .left_joins(:favorites, { project_supports: :project_return })
+                      .group('projects.id')
+                      .select('projects.*, SUM(project_returns_project_supports.price) as total_supported_amount, COUNT(project_supports.id) as project_supports_count, COUNT(favorites.id) as favorites_count')
+
     render json: {
       projects: projects.map { |project| ProjectSerializer.new(project: project).as_json }
     }
