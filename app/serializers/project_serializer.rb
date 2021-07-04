@@ -12,7 +12,7 @@ class ProjectSerializer
       description: @project.description,
       progress: @project.progress,
       supportersCount: @project.project_supports_count,
-      supportedAmount: @project.total_supported_amount,
+      supportedAmount: @project.project_supports_total_price || 0,
       favoritedCount: @project.favorites_count,
       imageUrl: @project.image_url,
       user: {

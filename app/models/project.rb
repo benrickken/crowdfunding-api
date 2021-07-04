@@ -36,4 +36,11 @@ class Project < ApplicationRecord
   def update_if_complete!
     update!(progress: :completed, completed_at: Time.zone.now) if supported_amount >= target_amount
   end
+
+  def self.query_for_serializer
+    includes(:user, { image_attachment: :blob })
+      .left_joins(:favorites, { project_returns: { project_supports: :project_return } })
+      .group('projects.id')
+      .select('projects.*, SUM(project_returns_project_supports.price) AS project_supports_total_price, COUNT(project_supports.id) AS project_supports_count, COUNT(favorites.id) AS favorites_count')
+  end
 end
