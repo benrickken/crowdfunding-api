@@ -8,6 +8,6 @@ class ContactForm
   def submit
     return false if invalid?
 
-    true
+    AdminContactMailer.with(title: title, body: body, email: email).new_contact_email.deliver_later
   end
 end
