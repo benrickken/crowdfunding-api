@@ -8,6 +8,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :users, only: %i[index show update]
     resources :projects, only: %i[index]
+    resources :contacts, only: %i[new create]
   end
 
   namespace :api do
