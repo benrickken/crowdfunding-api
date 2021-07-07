@@ -39,8 +39,13 @@ class Project < ApplicationRecord
 
   def self.query_for_serializer
     includes(:user, { image_attachment: :blob })
-      .left_joins(:favorites, { project_returns: { project_supports: :project_return } })
+      .left_joins({ project_returns: :project_supports })
       .group('projects.id')
-      .select('projects.*, SUM(project_returns_project_supports.price) AS project_supports_total_price, COUNT(project_supports.id) AS project_supports_count, COUNT(favorites.id) AS favorites_count')
+      .select(
+        'projects.*,'\
+        '(SELECT count(favorites.id) FROM favorites WHERE project_id = projects.id) AS favorites_count,'\
+        'SUM(CASE WHEN project_supports.id IS NOT NULL THEN project_returns.price END) AS project_supports_total_price,'\
+        'COUNT(project_supports.id) AS project_supports_count'\
+      )
   end
 end
