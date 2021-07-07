@@ -5,7 +5,7 @@ class Admin::ContactsController < Admin::BaseController
 
   def create
     @contact_form = ContactForm.new(contact_form_params)
-    if @contact_form.submit
+    if @contact_form.save
       redirect_to admin_projects_path, notice: 'Contact was successfully submitted.'
     else
       render :new

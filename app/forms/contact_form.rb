@@ -5,7 +5,7 @@ class ContactForm
 
   validates :title, :body, :email, presence: true
 
-  def submit
+  def save
     return false if invalid?
 
     AdminContactMailer.with(title: title, body: body, email: email).new_contact_email.deliver_later
