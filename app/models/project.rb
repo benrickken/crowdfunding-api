@@ -37,7 +37,7 @@ class Project < ApplicationRecord
     update!(progress: :completed, completed_at: Time.zone.now) if supported_amount >= target_amount
   end
 
-  def self.query_for_serializer
+  def self.aggregate_with_counts
     includes(:user, { image_attachment: :blob })
       .left_joins({ project_returns: :project_supports })
       .group('projects.id')

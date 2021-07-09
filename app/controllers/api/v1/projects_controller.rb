@@ -2,14 +2,14 @@ class Api::V1::ProjectsController < Api::V1::BaseController
   before_action :authenticate_user!, only: [:create]
 
   def index
-    projects = Project.query_for_serializer.order(created_at: :desc)
+    projects = Project.aggregate_with_counts.order(created_at: :desc)
     render json: {
       projects: projects.map { |project| ProjectSerializer.new(project: project).as_json }
     }
   end
 
   def show
-    project = Project.query_for_serializer.find(params[:id])
+    project = Project.aggregate_with_counts.find(params[:id])
     render json: {
       project: ProjectSerializer.new(project: project).as_json
     }
