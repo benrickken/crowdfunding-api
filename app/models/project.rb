@@ -43,8 +43,8 @@ class Project < ApplicationRecord
       .group('projects.id')
       .select(
         'projects.*,'\
-        '(SELECT count(favorites.id) FROM favorites WHERE project_id = projects.id) AS favorites_count,'\
-        'SUM(CASE WHEN project_supports.id IS NOT NULL THEN project_returns.price END) AS project_supports_total_price,'\
+        '(SELECT count(favorites.id) FROM favorites WHERE favorites.project_id = projects.id) AS favorites_count,'\
+        'SUM(CASE WHEN project_supports.id IS NOT NULL THEN project_returns.price ELSE 0 END) AS project_supports_total_price,'\
         'COUNT(project_supports.id) AS project_supports_count'\
       )
   end
