@@ -19,12 +19,12 @@ class Api::V1::MesController < Api::V1::BaseController
 
   def projects
     render json: {
-      projects: current_user.projects.map { |project| ProjectSerializer.new(project: project).as_json }
+      projects: current_user.projects.aggregate_with_counts.map { |project| ProjectSerializer.new(project: project).as_json }
     }
   end
 
   def backed_projects
-    backed_projects = current_user.backed_projects.includes(:user).distinct
+    backed_projects = current_user.backed_projects.aggregate_with_counts
 
     render json: {
       backedProjects: backed_projects.map do |project|

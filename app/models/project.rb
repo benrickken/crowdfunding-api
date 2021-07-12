@@ -36,4 +36,16 @@ class Project < ApplicationRecord
   def update_if_complete!
     update!(progress: :completed, completed_at: Time.zone.now) if supported_amount >= target_amount
   end
+
+  def self.aggregate_with_counts
+    includes(:user, { image_attachment: :blob })
+      .left_joins({ project_returns: :project_supports })
+      .group('projects.id')
+      .select(
+        'projects.*,'\
+        '(SELECT count(favorites.id) FROM favorites WHERE favorites.project_id = projects.id) AS favorites_count,'\
+        'SUM(CASE WHEN project_supports.id IS NOT NULL THEN project_returns.price ELSE 0 END) AS project_supports_total_price,'\
+        'COUNT(project_supports.id) AS project_supports_count'\
+      )
+  end
 end

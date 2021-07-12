@@ -110,4 +110,33 @@ RSpec.describe Project, type: :model do
       end
     end
   end
+
+  describe 'class methods' do
+    describe '.aggregate_with_counts' do
+      let(:project) { create(:project) }
+      before do
+        project_return1 = create(:project_return, project: project, price: 10_000)
+        project_return2 = create(:project_return, project: project, price: 20_000)
+        project_return3 = create(:project_return, project: project, price: 30_000)
+        create(:project_support, project_return: project_return1)
+        create(:project_support, project_return: project_return2)
+        create(:project_support, project_return: project_return3)
+        create(:favorite, project: project)
+        create(:favorite, project: project)
+      end
+      subject { Project.aggregate_with_counts }
+
+      it 'should aggregate the number of favorites for each project' do
+        expect(subject.first.favorites_count).to eq(2)
+      end
+
+      it 'should aggregate the total price of project_supports for each project' do
+        expect(subject.first.project_supports_total_price).to eq(60_000)
+      end
+
+      it 'should aggregate the number of project_supports for each project' do
+        expect(subject.first.project_supports_count).to eq(3)
+      end
+    end
+  end
 end
