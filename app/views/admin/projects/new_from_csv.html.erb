@@ -1,0 +1,26 @@
+<% if @errors.any? %>
+  <div class="alert alert-warning">
+    <ul>
+      <% @errors.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>
+
+<%= form_with url: create_from_csv_admin_projects_path, multipart: true, local: true do |f| %>
+  <div class="container">
+    <div class="row">
+      <div class="col-6 offset-3">
+        <%= f.label :csv_file %>
+        <%= f.file_field :csv_file, class: "form-control" %>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-6 offset-3">
+        <%= f.submit 'Import', class: "btn btn-primary" %>
+      </div>
+    </div>
+  </div>
+<% end %>
