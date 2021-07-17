@@ -1,14 +1,14 @@
-<% if @errors.any? %>
+<% if @project_upload_form.errors.any? %>
   <div class="alert alert-warning">
     <ul>
-      <% @errors.each do |message| %>
+      <% @project_upload_form.errors.full_messages.each do |message| %>
         <li><%= message %></li>
       <% end %>
     </ul>
   </div>
 <% end %>
 
-<%= form_with url: create_from_csv_admin_projects_path, multipart: true, local: true do |f| %>
+<%= form_with model: @project_upload_form, url: create_from_csv_admin_projects_path, multipart: true, local: true do |f| %>
   <div class="container">
     <div class="row">
       <div class="col-6 offset-3">

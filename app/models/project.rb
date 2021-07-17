@@ -53,7 +53,7 @@ class Project < ApplicationRecord
 
   def self.import_projects_from_csv(file)
     projects = []
-    errors = []
+    error_messages = []
 
     CSV.foreach(file.path, headers: true).with_index do |row, index|
       project = Project.new
@@ -61,14 +61,12 @@ class Project < ApplicationRecord
       if project.valid?
         projects << project
       else
-        project.errors.full_messages.each do |message|
-          errors.push("#{index + 1}行目: #{message}")
-        end
+        error_messages += project.errors.full_messages.map { |message| "#{index + 1}行目: #{message}" }
       end
     end
 
-    import(projects) if errors.empty?
-    errors
+    import(projects) if error_messages.empty?
+    error_messages
   end
 
   def self.csv_attributes

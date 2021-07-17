@@ -5,20 +5,21 @@ class Admin::ProjectsController < Admin::BaseController
   end
 
   def new_from_csv
-    @errors = []
+    @project_upload_form = ProjectUploadForm.new
   end
 
   def create_from_csv
-    unless params[:csv_file] && params[:csv_file].content_type == 'text/csv'
-      @errors = ['正しいファイル形式のファイルがアップロードされていません。CSV形式のファイルをアップロードしてください。']
-      return render :new_from_csv
-    end
-
-    @errors = Project.import_projects_from_csv(params[:csv_file])
-    if @errors.empty?
-      redirect_to admin_projects_path
+    @project_upload_form = ProjectUploadForm.new(project_upload_form_params)
+    if @project_upload_form.save
+      redirect_to admin_projects_path, notice: 'Contact was successfully submitted.'
     else
       render :new_from_csv
     end
+  end
+
+  private
+
+  def project_upload_form_params
+    params.fetch(:project_upload_form, {}).permit(:csv_file)
   end
 end
