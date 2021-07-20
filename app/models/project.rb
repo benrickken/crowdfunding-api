@@ -1,3 +1,5 @@
+require 'csv'
+
 class Project < ApplicationRecord
   include Rails.application.routes.url_helpers
 
@@ -47,5 +49,27 @@ class Project < ApplicationRecord
         'SUM(CASE WHEN project_supports.id IS NOT NULL THEN project_returns.price ELSE 0 END) AS project_supports_total_price,'\
         'COUNT(project_supports.id) AS project_supports_count'\
       )
+  end
+
+  def self.import_projects_from_csv(file)
+    projects = []
+    error_messages = []
+
+    CSV.foreach(file.path, headers: true).with_index do |row, index|
+      project = Project.new
+      project.attributes = row.to_hash.slice(*csv_attributes)
+      if project.valid?
+        projects << project
+      else
+        error_messages += project.errors.full_messages.map { |message| "#{index + 1}行目: #{message}" }
+      end
+    end
+
+    import(projects) if error_messages.empty?
+    error_messages
+  end
+
+  def self.csv_attributes
+    %w[user_id title target_amount due_date description progress]
   end
 end
